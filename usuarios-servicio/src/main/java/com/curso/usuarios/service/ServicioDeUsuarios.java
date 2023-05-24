@@ -3,6 +3,8 @@ package com.curso.usuarios.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
 import com.curso.usuarios.service.dto.DatosModificablesUsuario;
 import com.curso.usuarios.service.dto.DatosNuevoUsuario;
 import com.curso.usuarios.service.dto.DatosUsuario;

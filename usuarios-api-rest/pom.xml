@@ -2,7 +2,7 @@
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.curso.usuarios</groupId>
-  <artifactId>usuarios-servicio</artifactId>
+  <artifactId>usuarios-api-rest</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   
   
@@ -18,9 +18,9 @@
 		<!-- En esa app web queremos trabajar con Persistencia (BBDD)-->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		    <artifactId>spring-boot-starter-web</artifactId>
 		    <version>2.7.12</version>
-		</dependency>				
+		</dependency>	
 		<!-- Lombok, nos da un montón de anotaciones muy útiles-->
 		<dependency>
 		    <groupId>org.projectlombok</groupId>
@@ -36,42 +36,8 @@
 		</dependency>	
 		<dependency>	
 		  <groupId>com.curso.usuarios</groupId>
-		  <artifactId>usuarios-entidades</artifactId>
+		  <artifactId>usuarios-servicio</artifactId>
 		  <version>0.0.1-SNAPSHOT</version>
 		</dependency>	
-		<!-- Dependencias para las pruebas -->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-test</artifactId>
-		    <version>2.7.12</version>
-		    <scope>test</scope>
-		</dependency>
-		<!-- Montame un bbdd de pruebas-->
-		<dependency>
-		    <groupId>com.h2database</groupId>
-		    <artifactId>h2</artifactId>
-		    <version>2.1.214</version>
-		    <scope>test</scope>
-		</dependency>
-		<!--Pero para las pruebas scope:test necesito un Tomcat y arrancar la app web-->
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-web</artifactId>
-		    <version>2.7.12</version>
-		    <scope>test</scope>
-		</dependency>	
 	</dependencies>
-	<!-- 
-		Nos aseguramos que tenemos una versión del plugin que ejecuta las pruebas: surefire
-		que trabaje con Junit 5	
-	-->
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-surefire-plugin</artifactId>
-				<version>2.22.2</version>
-			</plugin>
-		</plugins>
-	</build>
 </project>
