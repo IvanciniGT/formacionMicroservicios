@@ -1,0 +1,135 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<!--
+	Maven es una herramienta de AUTOMATIZACION DE TAREAS.
+	
+	Qué tipo de tareas? Muy variadas.
+	 - Compilación
+	 - Empaquetado
+	 - Ejecución de pruebas
+	 - Madarlo a sonarqube
+	 - Generar una imagen de contenedor del proyecto
+	 - Descargar dependencias 
+	 
+	 Este fichero es el de configuración de MAVEN para nuestro proyecto
+	 
+	 Maven per sé no hace nada! Ni sabe hacerlo.
+	 Todo lo hace mediante plugins.
+	 Por defecto maven viene con 8-10 plugins, para las tareas más típicas.
+	 A veces ponemos más plugins... o quitamos los que trae, o los actualizamos a nuevas versiones.
+	 
+	 Antes de hacer cualquier tarea, maven descarga las dependencias de un REPO de ARTEFACTOS 
+	 (el que esté configurado en la carpeta ~/.m2/settings.xml).
+	 Los artefactos (.jar que necesito) se decargan en esa carpeta .m2 también.
+	 Y maven genera el classpath de mi proyecto, para que se pueda compilar/ejecutar.
+	 
+	 Cuando trabajamos con maven usamos la estructura de carpetas:
+	 
+	 	proyecto
+	 		|- src
+	 		|	|- main
+	 		|	|	|- java			Metemos el código principal del proyecto
+	 		|	|	|- resources	Metemos archivos que son necesarios para el proyecto (configuración...)
+	 		|	|- test
+	 		|	 	|- java			Metemos el código de programas de prueba de mi proyecto
+	 		|	 	|- resources	Metemos archivos que son necesarios para las pruebas de mi proyecto (configuración...)
+	 		|- target
+	 		|	|- classes
+	 		|	|- test-classes
+	 		|	|- artefacto.jar (artefacto.war, artefacto.ear)
+	 		|-pom.xml
+	 		
+	 A maven le podemos pedir que ejecute una automatización (GOAL) sobre el proyecto:
+	 
+	 - compile			Compila los archivos principales del proyecto (src/main/java) y deja los .class en (target/classes)
+	 						resources: Copiar lo que hay en src/main/resources en target/classes
+	 - test-compile		Compila los archivos de pruebas del proyecto (src/test/java) y deja los .class en (target/test-classes)
+	 						resources: Copiar lo que hay en src/test/resources en target/test-classes
+	 - test				Ejecuta las pruebas (los programas que hay en target/test-classes
+	 - package			Empaquetar lo que tenemos en target/classes generando un artefacto en target
+	 - install			Copiar el artefacto (jar, war, ear) en mi carpeta .m2, y eso me permite usar este artefacto en Otros Proyectos de mi máquina
+	
+	 - clean			Borrar la carpeta target
+	 
+	 La carpeta CLEAN !! nunca jamás se sube al repo de GIT. No subo mi artefacto, ni el compilado de nada.
+	 Todo eso se debe generar en automatico desde maven.
+	-->
+
+	<!-- Identificación del proyecto: Coordenadas -->	
+	<groupId>com.curso.prueba</groupId>
+	<artifactId>prueba-servicio</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<!-- Otros metadatos -->
+	<name></name>
+	<description></description>
+	<url></url>
+	
+	<!-- Configuraciones para los plugins de maven que estén dados de alta en el proyecto -->
+	<properties>
+		  <java.version>11</java.version>
+		  <maven.compiler.source>11</maven.compiler.source>
+		  <maven.compiler.target>11</maven.compiler.target>
+	</properties>
+  
+  	<!-- Librerias que necesita mi proyecto --> 
+	<dependencies>
+		<!-- Incluye Spring y Springboot, Tomcat, y me permite generar una app web-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-web</artifactId>
+		    <version>2.7.12</version>
+		</dependency>	
+		<!-- En esa app web queremos trabajar con Persistencia (BBDD)-->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-jpa</artifactId>
+		    <version>2.7.12</version>
+		</dependency>				
+		<!-- Lombok, nos da un montón de anotaciones muy útiles-->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.26</version>
+		    <!-- 
+		    Esta dependencia no se necesita en tiempo de ejecución. 
+		    Lo que hace es en tiempo de compilación generar código por mi
+		    No hace falta distribuir el jar de lombok a mis usuarios.
+		    Realmente scope: provided hace un truco. Decimos: En el entorno de ejecución... te la darán 
+		    -->
+		    <scope>provided</scope>
+		</dependency>	
+		<!-- Montame un bbdd de pruebas-->
+		<dependency>
+		    <groupId>com.h2database</groupId>
+		    <artifactId>h2</artifactId>
+		    <version>2.1.214</version>
+		</dependency>
+		<!-- 
+			Es necesaria desde Java 9. Antes no. 
+			Esta la usa Spring para transformar las salidas de los ResponseEntity a JSON y XML
+							   para transformar las entradas de las funciones REST desde JSON y XML
+		-->
+		<dependency>
+		    <groupId>javax.xml.bind</groupId> <!-- jakarta.xml.bind-->
+		    <artifactId>jaxb-api</artifactId>
+		    <version>2.3.1</version>
+		</dependency>
+
+	</dependencies>
+	
+	<build>
+		<plugins><!--Aqui aunque no los vea, hay ya algunos cargados: compilacion, empaquetado, pruebas...-->
+			<!-- 
+				Me permite ejecutar el proyecto desde maven 
+				mvn spring-boot run
+			-->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+			    <artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+	
+</project>
