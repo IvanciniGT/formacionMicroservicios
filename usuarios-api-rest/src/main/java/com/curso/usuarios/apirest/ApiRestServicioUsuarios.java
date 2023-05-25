@@ -16,6 +16,7 @@ import com.curso.usuarios.apirest.dto.DatosModificablesUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosNuevoUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
 import com.curso.usuarios.service.ServicioDeUsuarios;
+import com.curso.usuarios.service.dto.DatosUsuario;
 
 
 //Servicio REST
