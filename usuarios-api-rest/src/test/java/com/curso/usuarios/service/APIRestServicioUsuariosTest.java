@@ -6,11 +6,17 @@ import org.junit.platform.suite.api.SelectClasspathResource;
 import org.junit.platform.suite.api.Suite;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+import org.hamcrest.Matchers;
+import org.hamcrest.collection.IsCollectionWithSize;
+import org.json.JSONObject;
+
 import com.curso.usuarios.service.dto.DatosNuevoUsuario;
 
 import io.cucumber.java.ast.Cuando;
@@ -24,7 +30,7 @@ import io.cucumber.spring.CucumberContextConfiguration;
 @IncludeEngines("cucumber")
 // Ponemos en marcha cucumber
 @CucumberContextConfiguration
-// Con esto le decimos a cucumber, dónde están los fichero de features
+// Con esto le decimos a cucumber, a través de JUNIT, dónde están los fichero de features
 @SelectClasspathResource("features")
 // Solicitar el arranque en paralelo de un servidor tomcat con mi app dentro para hacer pruebas
 @SpringBootTest( classes = AplicacionTest.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -38,6 +44,7 @@ public class APIRestServicioUsuariosTest {
 	private MockMvc clienteHTTP;
 	private DatosNuevoUsuario usuario;
 	private ResultActions respuesta;
+	private JSONObject objetoJson;
 	
 	public APIRestServicioUsuariosTest(ServicioDeUsuarios servicioDeUsuarios, MockMvc clienteHTTP) {
 		this.servicioDeUsuarios = servicioDeUsuarios;
@@ -65,7 +72,7 @@ public class APIRestServicioUsuariosTest {
 	}
 	
 	@Dado("el usuario está guardado en mi sistema")
-	public void guardarUsuario(Integer edad) {
+	public void guardarUsuario() {
 		servicioDeUsuarios.crearUsuario(usuario);
 	}
 	
@@ -74,6 +81,21 @@ public class APIRestServicioUsuariosTest {
 		switch(metodo) {
 			case "get":
 				respuesta = clienteHTTP.perform(MockMvcRequestBuilders.get(url));
+				break;
+			case "delete":
+				respuesta = clienteHTTP.perform(MockMvcRequestBuilders.delete(url));
+				break;
+			case "post":
+				respuesta = clienteHTTP.perform(MockMvcRequestBuilders.post(url)
+																	  .contentType(MediaType.APPLICATION_JSON)
+																	  .content(objetoJson.toString())
+												);
+				break;
+			case "put":
+				respuesta = clienteHTTP.perform(MockMvcRequestBuilders.put(url)
+																	  .contentType(MediaType.APPLICATION_JSON)
+																	  .content(objetoJson.toString())
+												);
 				break;
 		}
 	}
@@ -84,6 +106,9 @@ public class APIRestServicioUsuariosTest {
 			case "OK":
 				respuesta.andExpect(status().isOk() );
 				break;		
+			case "CREATED":
+				respuesta.andExpect(status().isCreated() );
+				break;		
 			case "NOT_FOUND":
 				respuesta.andExpect(status().isNotFound() );
 				break;
@@ -91,39 +116,44 @@ public class APIRestServicioUsuariosTest {
 	}
 	
 	@Entonces("la respuesta debe contener un json")
-	public void la_respuesta_debe_contener_un_json() {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void la_respuesta_debe_contener_un_json() throws Exception {
+	    respuesta.andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
 	}
-	
+	/*
+	 * 	JSON										XML
+		{
+			"id": 1,
+	        "nombre": "Ivan",
+	        "apellidos": "Osuna",
+	        "edad": 44
+	    }
+	 *	JSONPATH									XPATH
+	 *  Me permite una sintaxis con la que extraer/localocar partes de un documento json
+	 */
+        
 	@Entonces("ese json debe contener una lista de longitud {int}")
-	public void ese_json_debe_contener_una_lista_de_longitud(Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void ese_json_debe_contener_una_lista_de_longitud(Integer tamano) throws Exception {
+	    respuesta.andExpect(jsonPath("$.*", IsCollectionWithSize.hasSize(tamano)));
 	}
 	
 	@Entonces("el elemento en la posicion {int} debe tener por {string}: {string}")
-	public void el_elemento_en_la_posicion_debe_tener_por(Integer int1, String string, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void el_elemento_en_la_posicion_debe_tener_por(Integer posicion, String campo, String valor) throws Exception {
+	    respuesta.andExpect(jsonPath("$["+(posicion-1)+"]."+campo, Matchers.is(valor)));
 	}
 	
 	@Entonces("el elemento en la posicion {int} debe tener por {string}: {int}")
-	public void el_elemento_en_la_posicion_debe_tener_por(Integer int1, String string, Integer int2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void el_elemento_en_la_posicion_debe_tener_por_entero(Integer posicion, String campo, Integer valor) throws Exception {
+	    respuesta.andExpect(jsonPath("$["+(posicion-1)+"]."+campo, Matchers.is(valor)));
 	}
 	
 	@Entonces("que tener por {string}: {string}")
-	public void que_tener_por(String string, String string2) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void que_tener_por(String campo, String valor) throws Exception {
+	    respuesta.andExpect(jsonPath("$."+campo, Matchers.is(valor)));
 	}
 	
 	@Entonces("que tener por {string}: {int}")
-	public void que_tener_por(String string, Integer int1) {
-	    // Write code here that turns the phrase above into concrete actions
-	    throw new io.cucumber.java.PendingException();
+	public void que_tener_por(String campo, Integer valor) throws Exception {
+	    respuesta.andExpect(jsonPath("$."+campo, Matchers.is(valor)));
 	}
 }
 

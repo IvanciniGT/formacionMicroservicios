@@ -63,5 +63,27 @@ Diccionario
 	asserrEquals("ES",dict.getIdioma())
 	
 ---
+			
+			ESTA PRIMERA OPCION NO NOS INTERESA !!!!!
+Cucumber	<<< Procesar la clase a través de Cucumber
+	java -cp <classpath> cucumber.api.cli.Main
+												ARCHIVO DE FEATURES
+												CODIGO JAVA DONDE ESTAN LOS PASOS
+												
+			SIEMPRE ME INTERESA EJECUTAR LAS PRUEBAS A TRAVES DE JUNIT
+			Por qué?
+			- JUnit genera unos informes de pruebas con un formato estandar, que todos los programas que vengan detrás entenderán: JENKINS, ECLIPSE
+Junit		<<< Procesar la clase a través de JUnit
+	Spring ... Cuando se hace una prueba necesitamos una app de spring en funcionamiento
+	java -cp <classpath> org.junit.runner.JUnitCore 
+												ARCHIVO CON UNA PRUEBA JUNIT
+Maven
+	mvn test
+			Lo que realmente ejecuta son pruebas de JUNIT
+Tenemos la opcion 
+
+
+
+JUNIT   -> JUNIT PLATFORM -> ENGINE DE CUCUMBER PARA JUNIT PLATFORM ->	CUCUMBER
 
 

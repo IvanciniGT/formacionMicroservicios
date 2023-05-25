@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.curso.usuarios.apirest.dto.DatosModificablesUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosNuevoUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
+import com.curso.usuarios.service.ServicioDeUsuarios;
 
 
 //Servicio REST
@@ -24,8 +25,14 @@ import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
 
 public class ApiRestServicioUsuarios {
 	
+	private ServicioDeUsuarios servicioUsuarios;
+	
+	public ApiRestServicioUsuarios(ServicioDeUsuarios servicioUsuarios) {
+		this.servicioUsuarios = servicioUsuarios;
+	}
 	@GetMapping("/usuarios") 
 	public ResponseEntity<List<DatosUsuarioRest>> recuperarUsuarios(){
+		List<DatosUsuario> usuarios = servicioUsuarios.recuperarUsuarios();
 		return null;
 	}
 	@GetMapping("/usuarios/{id}") 
