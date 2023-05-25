@@ -15,6 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsCollectionWithSize;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.curso.usuarios.service.dto.DatosNuevoUsuario;
@@ -49,6 +50,21 @@ public class APIRestServicioUsuariosTest {
 	public APIRestServicioUsuariosTest(ServicioDeUsuarios servicioDeUsuarios, MockMvc clienteHTTP) {
 		this.servicioDeUsuarios = servicioDeUsuarios;
 		this.clienteHTTP = clienteHTTP;
+	}
+
+	@Dado("que tengo un objeto JSON")
+	public void que_tengo_un_objeto_json() {
+		objetoJson = new JSONObject();
+	}
+	
+	@Dado("que el objeto json tiene por campo {string} el valor {string}")
+	public void que_el_objeto_json_tiene_por_campo_el_valor(String campo, String valor) throws Exception {
+	    objetoJson.put(campo, valor);
+	}
+	
+	@Dado("que el objeto json tiene por campo {string} el valor {int}")
+	public void que_el_objeto_json_tiene_por_campo_el_valor(String campo, Integer valor) throws Exception {
+	    objetoJson.put(campo, valor);
 	}
 
 	@Dado("que tengo un usuario")

@@ -1,7 +1,11 @@
 package com.curso.usuarios.apirest;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
+import org.mapstruct.factory.Mappers;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.curso.usuarios.apirest.dto.DatosModificablesUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosNuevoUsuarioRest;
 import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
+import com.curso.usuarios.apirest.mapper.Mapeador;
 import com.curso.usuarios.service.ServicioDeUsuarios;
 import com.curso.usuarios.service.dto.DatosUsuario;
 
@@ -34,18 +39,26 @@ public class ApiRestServicioUsuarios {
 	@GetMapping("/usuarios") 
 	public ResponseEntity<List<DatosUsuarioRest>> recuperarUsuarios(){
 		List<DatosUsuario> usuarios = servicioUsuarios.recuperarUsuarios();
-		return null;
+		return new ResponseEntity<>(usuarios.stream()
+												.map(Mapeador.INSTANCE::convertirA)
+												.collect(Collectors.toList()), HttpStatus.OK);
 	}
 	@GetMapping("/usuarios/{id}") 
 	public ResponseEntity<DatosUsuarioRest> recuperarUsuario(@PathVariable Long id){
-		return null;
-	}
-	@PostMapping("/usuarios") 
-	public ResponseEntity<DatosUsuarioRest> crearUsuario(@RequestBody DatosNuevoUsuarioRest datosNuevoUsuario) {
-		return null;
+		Optional<DatosUsuario> usuario = servicioUsuarios.recuperarUsuario(id);
+		if(usuario.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(Mapeador.INSTANCE.convertirA(usuario.get()), HttpStatus.OK);
 	}
 	@DeleteMapping("/usuarios/{id}") 
 	public ResponseEntity<DatosUsuarioRest> borrarUsuario(@PathVariable Long id){
+		Optional<DatosUsuario> usuarioBorrado = servicioUsuarios.borrarUsuario(id);
+		if(usuarioBorrado.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(Mapeador.INSTANCE.convertirA(usuarioBorrado.get()), HttpStatus.OK);
+	}
+	@PostMapping("/usuarios") 
+	public ResponseEntity<DatosUsuarioRest> crearUsuario(@RequestBody DatosNuevoUsuarioRest datosNuevoUsuario) {
 		return null;
 	}
 	@PutMapping("/usuarios/{id}") 
