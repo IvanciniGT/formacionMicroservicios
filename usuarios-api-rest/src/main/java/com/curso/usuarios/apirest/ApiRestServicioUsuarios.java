@@ -24,12 +24,16 @@ import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
 
 public class ApiRestServicioUsuarios {
 	
-	@PostMapping("/usuarios") 
-	public ResponseEntity<DatosUsuarioRest> crearUsuario(@RequestBody DatosNuevoUsuarioRest datosNuevoUsuario) {
+	@GetMapping("/usuarios") 
+	public ResponseEntity<List<DatosUsuarioRest>> recuperarUsuarios(){
 		return null;
 	}
 	@GetMapping("/usuarios/{id}") 
 	public ResponseEntity<DatosUsuarioRest> recuperarUsuario(@PathVariable Long id){
+		return null;
+	}
+	@PostMapping("/usuarios") 
+	public ResponseEntity<DatosUsuarioRest> crearUsuario(@RequestBody DatosNuevoUsuarioRest datosNuevoUsuario) {
 		return null;
 	}
 	@DeleteMapping("/usuarios/{id}") 
@@ -40,9 +44,6 @@ public class ApiRestServicioUsuarios {
 	public ResponseEntity<DatosUsuarioRest> modificarUsuario(@PathVariable Long id, @RequestBody DatosModificablesUsuarioRest datosModificablesUsuario){
 		return null;
 	}
-	@GetMapping("/usuarios") 
-	public ResponseEntity<List<DatosUsuarioRest>> recuperarUsuarios(){
-		return null;
-	}
+	
 
 }
