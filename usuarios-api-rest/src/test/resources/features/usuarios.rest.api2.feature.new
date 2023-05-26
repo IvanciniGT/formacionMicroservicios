@@ -1,0 +1,103 @@
+#language:es
+
+Característica: API REST del servicio de usuarios
+
+	Esquema del escenario: Cargar usuarios
+	      Dado que tengo un usuario
+	      	 Y el usuario tiene por nombreCompleto "<nombreCompleto>"
+	      	 Y el usuario tiene por edad <edad>
+	      	 Y el usuario está guardado en mi sistema
+
+					Ejemplos:	        
+					| posicion | nombreCompleto | apellidos | edad 	|
+					| 1 			 | Ivan 	| Osuna 		| 44 		|
+					| 2 			 | Menchu | García 		| 27 		|
+
+	Esquema del escenario: Recuperar usuarios
+   	  Cuando invoco al servicio rest "/api/v2/usuarios" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y ese json debe contener una lista de longitud 2
+	         Y el elemento en la posicion <posicion> debe tener por "nombreCompleto": "<nombreCompleto>"
+	         Y el elemento en la posicion <posicion> debe tener por "edad": <edad>
+	         
+					Ejemplos:	        
+					| posicion | nombreCompleto | apellidos | edad 	|
+					| 1 			 | Ivan 	| Osuna 		| 44 		|
+					| 2 			 | Menchu | García 		| 27 		|
+
+
+	Escenario: Recuperar un usuario que existe
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/1" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 1
+	         Y que tener por "nombreCompleto": "Ivan"
+	         Y que tener por "edad": 44
+	         
+	Escenario: Recuperar un usuario que NO existe
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/021215841" con método "get"
+	  Entonces se recibe una respuesta con código "NOT_FOUND"
+	         
+	Escenario: Borrar un usuario que existe
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/1" con método "delete"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 1
+	         Y que tener por "nombreCompleto": "Ivan"
+	         Y que tener por "edad": 44
+	    Cuando invoco al servicio rest "/api/v2/usuarios/1" con método "get"
+	  Entonces se recibe una respuesta con código "NOT_FOUND"
+	         
+	Escenario: Borrar un usuario que NO existe
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/021215841" con método "delete"
+	  Entonces se recibe una respuesta con código "NOT_FOUND"
+	         
+
+
+	Esquema del escenario: Modificar un usuario que existe
+			  Dado que tengo un objeto JSON
+			     Y que el objeto json tiene por campo "edad" el valor <edad> 
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/2" con método "put"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 2
+	         Y que tener por "edad": <edad> 
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/2" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 2
+	         Y que tener por "edad": <edad> 
+	         
+	    Ejemplos:	        
+					| edad 	|
+					| 33  	|
+	         
+	Escenario: Modificar un usuario que NO existe
+			  Dado que tengo un objeto JSON
+			     Y que el objeto json tiene por campo "edad" el valor 33 
+   	  Cuando invoco al servicio rest "/api/v2/usuarios/021215841" con método "put"
+	  Entonces se recibe una respuesta con código "NOT_FOUND"
+	         
+
+	Esquema del escenario: Crear nuevo usuario
+			  Dado que tengo un objeto JSON
+			     Y que el objeto json tiene por campo "nombreCompleto" el valor "<nombreCompleto>"
+			     Y que el objeto json tiene por campo "edad" el valor <edad> 
+   	  Cuando invoco al servicio rest "/api/v2/usuarios" con método "post"
+	  Entonces se recibe una respuesta con código "CREATED"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 3
+	         Y que tener por "nombreCompleto": "<nombreCompleto>" 
+	         Y que tener por "edad": <edad>   	
+	    Cuando invoco al servicio rest "/api/v2/usuarios/3" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 3
+	         Y que tener por "nombreCompleto": "<nombreCompleto>" 
+	         Y que tener por "edad": <edad> 
+	         
+	    Ejemplos:	        
+					| nombreCompleto    | apellidos  | edad 	|
+					| Felipe   	| Antón      | 56  		|
+	         

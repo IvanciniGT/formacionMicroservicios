@@ -75,6 +75,10 @@ public class APIRestServicioUsuariosTest {
 	public void el_usuario_tiene_por_nombre(String nombre) {
 	    usuario.setNombre(nombre);
 	}
+	@Dado("el usuario tiene por nombreCompleto {string}")
+	public void el_usuario_tiene_por_nombre_comlpeto(String nombre) {
+	    usuario.setNombreCompleto(nombre);
+	}
 	
 	@Dado("el usuario tiene por apellidos {string}")
 	public void el_usuario_tiene_por_apellidos(String apellidos) {

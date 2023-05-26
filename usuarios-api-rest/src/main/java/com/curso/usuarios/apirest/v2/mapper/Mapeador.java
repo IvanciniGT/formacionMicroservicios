@@ -1,11 +1,11 @@
-package com.curso.usuarios.apirest.mapper;
+package com.curso.usuarios.apirest.v2.mapper;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-import com.curso.usuarios.apirest.dto.DatosModificablesUsuarioRest;
-import com.curso.usuarios.apirest.dto.DatosNuevoUsuarioRest;
-import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
+import com.curso.usuarios.apirest.v2.dto.DatosModificablesUsuarioRest;
+import com.curso.usuarios.apirest.v2.dto.DatosNuevoUsuarioRest;
+import com.curso.usuarios.apirest.v2.dto.DatosUsuarioRest;
 import com.curso.usuarios.service.dto.DatosModificablesUsuario;
 import com.curso.usuarios.service.dto.DatosNuevoUsuario;
 import com.curso.usuarios.service.dto.DatosUsuario;

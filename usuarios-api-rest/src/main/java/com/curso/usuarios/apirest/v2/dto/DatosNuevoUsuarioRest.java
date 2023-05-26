@@ -1,4 +1,4 @@
-package com.curso.usuarios.apirest.dto;
+package com.curso.usuarios.apirest.v2.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -8,7 +8,6 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper=true)
 public class DatosNuevoUsuarioRest extends DatosModificablesUsuarioRest{
 
-	private String nombre;
-	private String apellidos;
+	private String nombreCompleto;
 	
 }

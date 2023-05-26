@@ -1,4 +1,4 @@
-package com.curso.usuarios.service.dto;
+package com.curso.usuarios.apirest.v1.dto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -6,7 +6,7 @@ import lombok.EqualsAndHashCode;
 // DTO: Data Transfer Object
 @Data
 @EqualsAndHashCode(callSuper=true)
-public class DatosNuevoUsuario extends DatosModificablesUsuario{
+public class DatosNuevoUsuarioRest extends DatosModificablesUsuarioRest{
 
 	private String nombre;
 	private String apellidos;

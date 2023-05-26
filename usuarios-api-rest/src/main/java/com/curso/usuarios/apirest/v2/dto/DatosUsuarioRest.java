@@ -1,4 +1,4 @@
-package com.curso.usuarios.apirest.dto;
+package com.curso.usuarios.apirest.v2.dto;
 
 
 import lombok.Data;

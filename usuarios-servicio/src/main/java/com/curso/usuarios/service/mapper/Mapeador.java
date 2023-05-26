@@ -13,6 +13,7 @@ public class Mapeador {
 		datos.setNombre(usuario.getNombre());
 		datos.setApellidos(usuario.getApellidos());
 		datos.setEdad(usuario.getEdad());
+		datos.setGenero(usuario.getGenero());
 		return datos;
 	}
 
@@ -27,6 +28,7 @@ public class Mapeador {
 	public static Usuario modificarUsuario(Usuario usuario,
 			DatosModificablesUsuario nuevosDatos) {
 		usuario.setEdad(nuevosDatos.getEdad());
+		usuario.setGenero(nuevosDatos.getGenero());
 		return usuario;
 	}
 

@@ -1,4 +1,4 @@
-package com.curso.usuarios.apirest;
+package com.curso.usuarios.apirest.v2;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.curso.usuarios.apirest.dto.DatosModificablesUsuarioRest;
-import com.curso.usuarios.apirest.dto.DatosNuevoUsuarioRest;
-import com.curso.usuarios.apirest.dto.DatosUsuarioRest;
-import com.curso.usuarios.apirest.mapper.Mapeador;
+import com.curso.usuarios.apirest.v2.dto.DatosModificablesUsuarioRest;
+import com.curso.usuarios.apirest.v2.dto.DatosNuevoUsuarioRest;
+import com.curso.usuarios.apirest.v2.dto.DatosUsuarioRest;
+import com.curso.usuarios.apirest.v2.mapper.Mapeador;
 import com.curso.usuarios.service.ServicioDeUsuarios;
 import com.curso.usuarios.service.dto.DatosUsuario;
 
@@ -26,13 +26,13 @@ import com.curso.usuarios.service.dto.DatosUsuario;
 //Servicio REST
 @RestController
 //Se antepone al resto de mapping que hay
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v2")
 
-public class ApiRestServicioUsuarios {
+public class ApiRestServicioUsuariosv2 {
 	
 	private ServicioDeUsuarios servicioUsuarios;
 	
-	public ApiRestServicioUsuarios(ServicioDeUsuarios servicioUsuarios) {
+	public ApiRestServicioUsuariosv2(ServicioDeUsuarios servicioUsuarios) {
 		this.servicioUsuarios = servicioUsuarios;
 	}
 	@GetMapping("/usuarios") 
