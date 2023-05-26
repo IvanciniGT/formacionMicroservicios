@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.hamcrest.Matchers;
 import org.hamcrest.collection.IsCollectionWithSize;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.curso.usuarios.service.dto.DatosNuevoUsuario;

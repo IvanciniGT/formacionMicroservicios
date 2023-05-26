@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import org.mapstruct.factory.Mappers;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -59,11 +58,15 @@ public class ApiRestServicioUsuarios {
 	}
 	@PostMapping("/usuarios") 
 	public ResponseEntity<DatosUsuarioRest> crearUsuario(@RequestBody DatosNuevoUsuarioRest datosNuevoUsuario) {
-		return null;
+		DatosUsuario nuevoUsuario = servicioUsuarios.crearUsuario(Mapeador.INSTANCE.convertirA(datosNuevoUsuario) );
+		return new ResponseEntity<>(Mapeador.INSTANCE.convertirA(nuevoUsuario), HttpStatus.CREATED);
 	}
 	@PutMapping("/usuarios/{id}") 
 	public ResponseEntity<DatosUsuarioRest> modificarUsuario(@PathVariable Long id, @RequestBody DatosModificablesUsuarioRest datosModificablesUsuario){
-		return null;
+		Optional <DatosUsuario> usuarioActualizado = servicioUsuarios.modificarUsuario(id, Mapeador.INSTANCE.convertirA(datosModificablesUsuario) );
+		if(usuarioActualizado.isEmpty())
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(Mapeador.INSTANCE.convertirA(usuarioActualizado.get()), HttpStatus.OK);
 	}
 	
 

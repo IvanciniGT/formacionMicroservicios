@@ -50,6 +50,8 @@ Característica: API REST del servicio de usuarios
 	         Y que tener por "nombre": "Ivan"
 	         Y que tener por "apellidos": "Osuna"
 	         Y que tener por "edad": 44
+	    Cuando invoco al servicio rest "/api/v1/usuarios/1" con método "get"
+	  Entonces se recibe una respuesta con código "NOT_FOUND"
 	         
 	Escenario: Borrar un usuario que NO existe
    	  Cuando invoco al servicio rest "/api/v1/usuarios/021215841" con método "delete"
@@ -59,23 +61,50 @@ Característica: API REST del servicio de usuarios
 
 	Esquema del escenario: Modificar un usuario que existe
 			  Dado que tengo un objeto JSON
-			     Y que el objeto json tiene por campo "nombre" el valor "<nombre>" 
-			     Y que el objeto json tiene por campo "apellidos" el valor "<apellidos>" 
 			     Y que el objeto json tiene por campo "edad" el valor <edad> 
-   	  Cuando invoco al servicio rest "/api/v1/usuarios/1" con método "put"
+   	  Cuando invoco al servicio rest "/api/v1/usuarios/2" con método "put"
 	  Entonces se recibe una respuesta con código "OK"
 	         Y la respuesta debe contener un json
-	         Y que tener por "id": 1
-	         Y que tener por "nombre": "<nombre>"
-	         Y que tener por "apellidos": "<apellidos>"
+	         Y que tener por "id": 2
+	         Y que tener por "edad": <edad> 
+   	  Cuando invoco al servicio rest "/api/v1/usuarios/2" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 2
 	         Y que tener por "edad": <edad> 
 	         
 	    Ejemplos:	        
-					| nombre | apellidos | edad 	|
-					| Ivan  	| Osuna    | 44  		|
+					| edad 	|
+					| 33  	|
 	         
 	Escenario: Modificar un usuario que NO existe
+			  Dado que tengo un objeto JSON
+			     Y que el objeto json tiene por campo "edad" el valor 33 
    	  Cuando invoco al servicio rest "/api/v1/usuarios/021215841" con método "put"
 	  Entonces se recibe una respuesta con código "NOT_FOUND"
 	         
+
+	Esquema del escenario: Crear nuevo usuario
+			  Dado que tengo un objeto JSON
+			     Y que el objeto json tiene por campo "nombre" el valor "<nombre>"
+			     Y que el objeto json tiene por campo "apellidos" el valor "<apellidos>" 
+			     Y que el objeto json tiene por campo "edad" el valor <edad> 
+   	  Cuando invoco al servicio rest "/api/v1/usuarios" con método "post"
+	  Entonces se recibe una respuesta con código "CREATED"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 3
+	         Y que tener por "nombre": "<nombre>" 
+	         Y que tener por "apellidos": "<apellidos>" 
+	         Y que tener por "edad": <edad>   	
+	    Cuando invoco al servicio rest "/api/v1/usuarios/3" con método "get"
+	  Entonces se recibe una respuesta con código "OK"
+	         Y la respuesta debe contener un json
+	         Y que tener por "id": 3
+	         Y que tener por "nombre": "<nombre>" 
+	         Y que tener por "apellidos": "<apellidos>" 
+	         Y que tener por "edad": <edad> 
+	         
+	    Ejemplos:	        
+					| nombre    | apellidos  | edad 	|
+					| Felipe   	| Antón      | 56  		|
 	         
